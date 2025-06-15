@@ -1,8 +1,8 @@
 // import necessary libraries
 import express from 'express';
 
-// import models
-import { Product } from '../models/product.model.js';
+// import controllers
+import { createProduct, deleteProductByid, getAllProducts, getProductById, updateProductById } from '../controllers/product.controller.js';
 
 // Create router
 const router = express.Router();
@@ -70,10 +70,7 @@ const router = express.Router();
  *                                      $ref: '#components/schemas/Product'
  *                      
  */
-router.get('/', async (req, res) => {
-    const products = await Product.find();
-    res.status(200).json({ success: true, data: products });
-});
+router.get('/', getAllProducts);
 
 /**
  * @swagger
@@ -104,23 +101,21 @@ router.get('/', async (req, res) => {
  *                                  description: Product with given productId
  *                                  $ref: '#components/schemas/Product'
  *          404:
- *              description: Product not found
+ *              description: Product not found / Invalid product ID
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: object
+ *                          $ref: '#components/schemas/ErrorResponse'
+ *          500:
+ *              description: Server error
  *              content:
  *                  application/json:
  *                      schema:
  *                          type: object
  *                          $ref: '#components/schemas/ErrorResponse'
  */
-router.get('/:id', async (req, res) => {
-    const productId = req.params['id'];
-    Product.findById(productId).then(product => {
-        if (product && product !== null)
-            res.status(200).json({ success: true, data: product });
-        else throw new Error('Document not found');
-    }).catch(error => {
-        res.status(404).json({ success: false, message: 'Couldn\'t find the document' })
-    });
-});
+router.get('/:id', getProductById);
 
 /**
  * @swagger
@@ -164,20 +159,7 @@ router.get('/:id', async (req, res) => {
  *                          type: object
  *                          $ref: '#components/schemas/ErrorResponse'
  */
-router.post('/', async (req, res) => {
-    // Validate req body
-    if (!(req.body && req.body.name !== null && req.body.category !== null && req.body.image !== null && req.body.price !== null))
-        return res.status(400).json({ success: false, message: 'Please provide all fields' });
-
-    // Create and save new product
-    const newProduct = new Product(req.body);
-    try {
-        await newProduct.save();
-        res.status(201).json({ success: true, data: newProduct });
-    } catch (error) {
-        res.status(500).json({ success: false, message: 'Server Error!' });
-    }
-})
+router.post('/', createProduct)
 
 /**
  * @swagger
@@ -214,24 +196,21 @@ router.post('/', async (req, res) => {
  *                                  description: Updated product
  *                                  $ref: '#components/schemas/Product'
  *          404:
- *              description: Product not found
+ *              description: Product not found / Invalid product ID
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: object
+ *                          $ref: '#components/schemas/ErrorResponse'
+ *          500:
+ *              description: Server error
  *              content:
  *                  application/json:
  *                      schema:
  *                          type: object
  *                          $ref: '#components/schemas/ErrorResponse'
  */
-router.patch('/:id', async (req, res) => {
-    // Get the product id and find the product
-    const productId = req.params['id'];
-    const newProductDetails = req.body;
-    Product.findByIdAndUpdate(productId, newProductDetails, { new: true }).then(product => {
-        if (!(product && product !== null)) throw new Error('Document not found');
-        res.status(200).json({ success: true, data: product });
-    }).catch(error => {
-        res.status(404).json({ success: false, message: 'Couldn\'t find the document' })
-    });
-})
+router.patch('/:id', updateProductById)
 
 /**
  * @swagger
@@ -262,21 +241,20 @@ router.patch('/:id', async (req, res) => {
  *                                  description: Deleted product
  *                                  $ref: '#components/schemas/Product'
  *          404:
- *              description: Product not found
+ *              description: Product not found / Invalid product ID
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: object
+ *                          $ref: '#components/schemas/ErrorResponse'
+ *          500:
+ *              description: Server error
  *              content:
  *                  application/json:
  *                      schema:
  *                          type: object
  *                          $ref: '#components/schemas/ErrorResponse'
  */
-router.delete('/:id', (req, res) => {
-    // Get the product id and find the product
-    const productId = req.params['id'];
-    Product.findByIdAndDelete(productId).then(product => {
-        res.status(200).json({ success: true, data: product });
-    }).catch(error => {
-        res.status(404).json({ success: false, message: 'Couldn\'t find the document' })
-    });
-})
+router.delete('/:id', deleteProductByid)
 
 export const productRoutes = router;

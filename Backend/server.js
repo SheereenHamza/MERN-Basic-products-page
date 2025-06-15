@@ -13,6 +13,7 @@ import { productRoutes } from './routes/product.route.js';
 import { swaggerDocs } from './swagger.js';
 
 const app = express();
+const PORT = process.env.PORT || 5000;
 
 // load .env file contents to process.env
 dotenv.config();
@@ -32,7 +33,7 @@ app.get('/', (req, res) => {
 app.use('/product', productRoutes)
 
 // start the server and make it listen on port 5000
-app.listen(process.env.PORT ?? 5000, () => {
+app.listen(PORT, () => {
     connectDB();
-    console.log(`Server running on http://localhost:${process.env.PORT ?? 5000}... Welcome!`);
+    console.log(`Server running on http://localhost:${PORT}... Welcome!`);
 });
