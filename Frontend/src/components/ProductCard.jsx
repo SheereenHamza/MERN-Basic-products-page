@@ -64,109 +64,109 @@ export const ProductCard = ({ product }) => {
     };
 
     return (
-        <Link to={`/product/${product._id}`}>
-            <Box
-                padding={10}
-                shadow='lg'
-                rounded='lg'
-                overflow='hidden'
-                transition='all 0.3s'
-                _hover={{ transform: 'translateY(-5px)', shadow: 'xl' }}
-            >
+        <Box
+            padding={10}
+            shadow='lg'
+            rounded='lg'
+            overflow='hidden'
+            transition='all 0.3s'
+            _hover={{ transform: 'translateY(-5px)', shadow: 'xl' }}
+        >
+            <Link to={`/product/${product._id}`}>
                 <Image h={40} minWidth={40} w='full' src={product.image} alt={product.name} objectFit='cover' />
-                <Heading> {product.name} </Heading>
-                <Text> {product.category} </Text>
-                <Text> ${product.price} </Text>
-                <HStack gap={2} justifyContent='left'>
-                    <IconButton variant="outline" colorPalette='blue' size='md' onClick={() => setOpenEditDialog(true)}>
-                        <MdEdit />
-                    </IconButton>
-                    <IconButton variant="outline" colorPalette='red' size='md' onClick={() => setOpenDeleteDialog(true)}>
-                        <RiDeleteBin6Line />
-                    </IconButton>
-                </HStack>
-                {/* Edit product dialog */}
-                <Dialog.Root size='md' lazyMount open={isEditDialogOpen}
-                    onOpenChange={(e) => setOpenEditDialog(e.open)} onExitComplete={cancelUpdateHandler} >
-                    <Portal>
-                        <Dialog.Backdrop />
-                        <Dialog.Positioner>
-                            <Dialog.Content>
-                                <Dialog.Header>
-                                    <Dialog.Title>Edit product details</Dialog.Title>
-                                </Dialog.Header>
-                                <Dialog.Body>
-                                    <VStack gap={2} width='70%'>
-                                        <Field.Root orientation='horizontal'>
-                                            <Field.Label> Name </Field.Label>
-                                            <Input name="name" variant="flushed"
-                                                value={newProduct.name}
-                                                onChange={(e) => setNewProduct({ ...newProduct, name: e.target.value })} />
-                                        </Field.Root>
-                                        <Field.Root orientation='horizontal'>
-                                            <Field.Label> Price </Field.Label>
-                                            <Input name="price" variant="flushed" type='number'
-                                                value={newProduct.price}
-                                                onChange={(e) => setNewProduct({ ...newProduct, price: e.target.value })} />
-                                        </Field.Root>
-                                        <Field.Root orientation='horizontal'>
-                                            <Field.Label> Category </Field.Label>
-                                            <Input name="category" variant="flushed"
-                                                value={newProduct.category}
-                                                onChange={(e) => setNewProduct({ ...newProduct, category: e.target.value })} />
-                                        </Field.Root>
-                                        <Field.Root orientation='horizontal'>
-                                            <Field.Label> Image </Field.Label>
-                                            <Input name="image" variant="flushed"
-                                                value={newProduct.image}
-                                                onChange={(e) => setNewProduct({ ...newProduct, image: e.target.value })} />
-                                        </Field.Root>
-                                    </VStack>
-                                </Dialog.Body>
-                                <Dialog.Footer>
-                                    <Dialog.ActionTrigger asChild>
-                                        <Button variant="outline" onClick={cancelUpdateHandler}>Cancel</Button>
-                                    </Dialog.ActionTrigger>
-                                    <Button onClick={() => updateProductHandler(product._id)}>Save</Button>
-                                </Dialog.Footer>
-                                <Dialog.CloseTrigger asChild>
-                                    <CloseButton size="sm" />
-                                </Dialog.CloseTrigger>
-                            </Dialog.Content>
-                        </Dialog.Positioner>
-                    </Portal>
-                </Dialog.Root>
-                {/* Delete product dialog */}
-                <Dialog.Root role="alertdialog" size='sm' lazyMount open={isDeleteDialogOpen}
-                    onOpenChange={(e) => setOpenDeleteDialog(e.open)}>
-                    <Portal>
-                        <Dialog.Backdrop />
-                        <Dialog.Positioner>
-                            <Dialog.Content>
-                                <Dialog.Header>
-                                    <Dialog.Title>Are you sure?</Dialog.Title>
-                                </Dialog.Header>
-                                <Dialog.Body>
-                                    <p>
-                                        This action cannot be undone. This will permanently delete the
-                                        product and remove it from the database.
-                                    </p>
-                                </Dialog.Body>
-                                <Dialog.Footer>
-                                    <Dialog.ActionTrigger asChild>
-                                        <Button variant="outline">Cancel</Button>
-                                    </Dialog.ActionTrigger>
-                                    <Button colorPalette="red" onClick={() => deleteProductHandler(product._id)}>Delete</Button>
-                                </Dialog.Footer>
-                                <Dialog.CloseTrigger asChild>
-                                    <CloseButton size="sm" />
-                                </Dialog.CloseTrigger>
-                            </Dialog.Content>
-                        </Dialog.Positioner>
-                    </Portal>
-                </Dialog.Root>
-                <Toaster />
-            </Box>
-        </Link>
+            </Link>
+            <Heading> {product.name} </Heading>
+            <Text> {product.category} </Text>
+            <Text> ${product.price} </Text>
+            <HStack gap={2} justifyContent='left'>
+                <IconButton variant="outline" colorPalette='blue' size='md' onClick={() => setOpenEditDialog(true)}>
+                    <MdEdit />
+                </IconButton>
+                <IconButton variant="outline" colorPalette='red' size='md' onClick={() => setOpenDeleteDialog(true)}>
+                    <RiDeleteBin6Line />
+                </IconButton>
+            </HStack>
+            {/* Edit product dialog */}
+            <Dialog.Root size='md' lazyMount open={isEditDialogOpen}
+                onOpenChange={(e) => setOpenEditDialog(e.open)} onExitComplete={cancelUpdateHandler} >
+                <Portal>
+                    <Dialog.Backdrop />
+                    <Dialog.Positioner>
+                        <Dialog.Content>
+                            <Dialog.Header>
+                                <Dialog.Title>Edit product details</Dialog.Title>
+                            </Dialog.Header>
+                            <Dialog.Body>
+                                <VStack gap={2} width='70%'>
+                                    <Field.Root orientation='horizontal'>
+                                        <Field.Label> Name </Field.Label>
+                                        <Input name="name" variant="flushed"
+                                            value={newProduct.name}
+                                            onChange={(e) => setNewProduct({ ...newProduct, name: e.target.value })} />
+                                    </Field.Root>
+                                    <Field.Root orientation='horizontal'>
+                                        <Field.Label> Price </Field.Label>
+                                        <Input name="price" variant="flushed" type='number'
+                                            value={newProduct.price}
+                                            onChange={(e) => setNewProduct({ ...newProduct, price: e.target.value })} />
+                                    </Field.Root>
+                                    <Field.Root orientation='horizontal'>
+                                        <Field.Label> Category </Field.Label>
+                                        <Input name="category" variant="flushed"
+                                            value={newProduct.category}
+                                            onChange={(e) => setNewProduct({ ...newProduct, category: e.target.value })} />
+                                    </Field.Root>
+                                    <Field.Root orientation='horizontal'>
+                                        <Field.Label> Image </Field.Label>
+                                        <Input name="image" variant="flushed"
+                                            value={newProduct.image}
+                                            onChange={(e) => setNewProduct({ ...newProduct, image: e.target.value })} />
+                                    </Field.Root>
+                                </VStack>
+                            </Dialog.Body>
+                            <Dialog.Footer>
+                                <Dialog.ActionTrigger asChild>
+                                    <Button variant="outline" onClick={cancelUpdateHandler}>Cancel</Button>
+                                </Dialog.ActionTrigger>
+                                <Button onClick={() => updateProductHandler(product._id)}>Save</Button>
+                            </Dialog.Footer>
+                            <Dialog.CloseTrigger asChild>
+                                <CloseButton size="sm" />
+                            </Dialog.CloseTrigger>
+                        </Dialog.Content>
+                    </Dialog.Positioner>
+                </Portal>
+            </Dialog.Root>
+            {/* Delete product dialog */}
+            <Dialog.Root role="alertdialog" size='sm' lazyMount open={isDeleteDialogOpen}
+                onOpenChange={(e) => setOpenDeleteDialog(e.open)}>
+                <Portal>
+                    <Dialog.Backdrop />
+                    <Dialog.Positioner>
+                        <Dialog.Content>
+                            <Dialog.Header>
+                                <Dialog.Title>Are you sure?</Dialog.Title>
+                            </Dialog.Header>
+                            <Dialog.Body>
+                                <p>
+                                    This action cannot be undone. This will permanently delete the
+                                    product and remove it from the database.
+                                </p>
+                            </Dialog.Body>
+                            <Dialog.Footer>
+                                <Dialog.ActionTrigger asChild>
+                                    <Button variant="outline">Cancel</Button>
+                                </Dialog.ActionTrigger>
+                                <Button colorPalette="red" onClick={() => deleteProductHandler(product._id)}>Delete</Button>
+                            </Dialog.Footer>
+                            <Dialog.CloseTrigger asChild>
+                                <CloseButton size="sm" />
+                            </Dialog.CloseTrigger>
+                        </Dialog.Content>
+                    </Dialog.Positioner>
+                </Portal>
+            </Dialog.Root>
+            <Toaster />
+        </Box>
     )
 }
