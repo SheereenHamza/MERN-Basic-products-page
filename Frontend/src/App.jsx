@@ -1,5 +1,5 @@
 // import necessary libraries
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 
 // import Chakra UI components
 import { Box } from "@chakra-ui/react";
@@ -9,7 +9,7 @@ import { useColorModeValue } from "./components/ui/color-mode";
 import { Navbar } from "./components";
 
 // import pages
-import { CreatePage, HomePage } from "./pages";
+import { CreatePage, HomePage, ProductPage } from "./pages";
 
 export const App = () => {
   return (
@@ -18,6 +18,8 @@ export const App = () => {
       <Routes>
         <Route path='/' element={<HomePage />} />
         <Route path='/create' element={<CreatePage />} />
+        <Route path='/product/:productId' element={<ProductPage />} />
+        <Route path='*' element={<Navigate to='/' replace/>} />
       </Routes>
     </Box>
   )

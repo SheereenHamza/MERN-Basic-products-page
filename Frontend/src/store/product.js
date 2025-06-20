@@ -28,6 +28,13 @@ export const useProductStore = create((set) => ({
             return data.data;
         } catch (error) { return { success: false, message: error.message } }
     },
+    fetchProductById: async (productId) => {
+        try {
+            const response = await fetch(`/product/${productId}`);
+            const data = await response.json();
+            return data.data;
+        } catch (error) { return { success: false, message: error.message } }
+    },
     updateProduct: async (productId, newProduct) => {
         try {
             const response = await fetch(`/product/${productId}`, {
